@@ -6,6 +6,7 @@ import 'package:stack_trace/stack_trace.dart';
 abstract class ITextTest {
   String get authorName;
   List<String> getOutput(Duration elapsed, Duration delta);
+  void setInput(List<String> args);
 }
 
 extension StringEx on String? {

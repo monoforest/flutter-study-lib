@@ -102,6 +102,7 @@ class _TestScreenState extends State<TestScreen>
   Ticker? ticker;
   List<String> output = [];
   ValueNotifier<int> outputNoti = ValueNotifier(0);
+  TextEditingController inputCon = TextEditingController();
 
   @override
   void initState() {
@@ -123,13 +124,41 @@ class _TestScreenState extends State<TestScreen>
       child: AnimatedBuilder(
         animation: outputNoti,
         builder: (context, _) {
-          return Text(
-            output.join('\n'),
-            style: TextStyle(
-              fontFeatures: [
-                FontFeature.tabularFigures(),
-              ],
-            ),
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: TextFormField(
+                      controller: inputCon,
+                      decoration: InputDecoration(
+                        labelText: 'Input...',
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  TextButton(
+                    onPressed: () {
+                      widget.test.setInput(inputCon.text.split(' '));
+                      inputCon.clear();
+                    },
+                    child: Text('입력'),
+                  ),
+                ],
+              ),
+              Flexible(
+                child: Text(
+                  output.join('\n'),
+                  style: TextStyle(
+                    fontFeatures: [
+                      FontFeature.tabularFigures(),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),
