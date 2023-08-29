@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 abstract class ITextTest {
+  String get authorName;
   List<String> getOutput(Duration elapsed, Duration delta);
 }
 
