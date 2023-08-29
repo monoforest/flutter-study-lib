@@ -120,35 +120,36 @@ class _TestScreenState extends State<TestScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AnimatedBuilder(
-        animation: outputNoti,
-        builder: (context, _) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: TextFormField(
-                      controller: inputCon,
-                      decoration: InputDecoration(
-                        labelText: 'Input...',
-                      ),
+    return AnimatedBuilder(
+      animation: outputNoti,
+      builder: (context, _) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: TextFormField(
+                    controller: inputCon,
+                    decoration: InputDecoration(
+                      labelText: 'Input...',
                     ),
                   ),
-                  SizedBox(width: 8),
-                  TextButton(
-                    onPressed: () {
-                      widget.test.setInput(inputCon.text.split(' '));
-                      inputCon.clear();
-                    },
-                    child: Text('입력'),
-                  ),
-                ],
-              ),
-              Flexible(
+                ),
+                SizedBox(width: 8),
+                TextButton(
+                  onPressed: () {
+                    widget.test.setInput(inputCon.text.split(' '));
+                    inputCon.clear();
+                  },
+                  child: Text('입력'),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Center(
                 child: Text(
                   output.join('\n'),
                   style: TextStyle(
@@ -158,10 +159,10 @@ class _TestScreenState extends State<TestScreen>
                   ),
                 ),
               ),
-            ],
-          );
-        },
-      ),
+            ),
+          ],
+        );
+      },
     );
   }
 
