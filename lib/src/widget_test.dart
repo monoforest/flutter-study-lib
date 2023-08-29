@@ -1,6 +1,21 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lib/src/ext.state.dart';
+import 'package:lib/src/test_app.dart';
+
+void runWidgetTest(IWidgetTest test,
+    {FlexScheme scheme = FlexScheme.blueM3, String title = 'Text Test'}) {
+  runApp(
+    TestApp(
+      scheme: scheme,
+      testBuilder: (context) => WidgetTest(
+        title: title,
+        tests: [test],
+      ),
+    ),
+  );
+}
 
 class WidgetTest extends StatefulWidget {
   final String title;
