@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lib/src/itext_test.dart';
-import 'package:stack_trace/stack_trace.dart';
 
 class TextTest extends StatefulWidget {
   final ITextTest test;
@@ -17,40 +16,7 @@ class TextTest extends StatefulWidget {
   State<TextTest> createState() => _TextTestState();
 }
 
-class _TextTestState extends State<TextTest> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (c) => TextTestScreen(test: widget.test),
-      },
-    );
-  }
-}
-
-class TextTestScreen extends StatefulWidget {
-  final ITextTest test;
-
-  const TextTestScreen({
-    super.key,
-    required this.test,
-  });
-
-  @override
-  State<TextTestScreen> createState() => _TextTestScreenState();
-}
-
-class _TextTestScreenState extends State<TextTestScreen>
+class _TextTestState extends State<TextTest>
     with SingleTickerProviderStateMixin {
   Ticker? ticker;
   List<String> output = [];
