@@ -67,5 +67,6 @@ class _TextTestState extends State<TextTest>
     lastElapsed = elapsed;
 
     output = widget.test.getOutput(elapsed, delta);
+    outputNoti.value += 1;
   }
 }
