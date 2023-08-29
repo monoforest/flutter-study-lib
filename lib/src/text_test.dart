@@ -6,7 +6,7 @@ import 'package:lib/src/console_test.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class TextTest extends StatefulWidget {
-  final IConsoleTest test;
+  final ITextTest test;
 
   const TextTest({
     super.key,
@@ -39,7 +39,7 @@ class _TextTestState extends State<TextTest> {
 }
 
 class TextTestScreen extends StatefulWidget {
-  final IConsoleTest test;
+  final ITextTest test;
 
   const TextTestScreen({
     super.key,
