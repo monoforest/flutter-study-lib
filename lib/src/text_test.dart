@@ -18,9 +18,6 @@ class TextTest extends StatefulWidget {
 }
 
 class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
-  Ticker? ticker;
-  List<String> output = [];
-  ValueNotifier<int> outputNoti = ValueNotifier(0);
   late TabController tabCon;
   int tabIndex = 0;
 
@@ -29,8 +26,6 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    ticker = createTicker(_onTick);
-    ticker?.start();
 
     tabCon = TabController(
       length: widget.tests.length,
@@ -40,8 +35,6 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    outputNoti.dispose();
-    ticker?.dispose();
     super.dispose();
   }
 
@@ -60,9 +53,6 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
           onTap: (newIndex) {
             safeSetState(() {
               tabIndex = newIndex;
-              lastElapsed = null;
-              ticker?.stop();
-              ticker?.start();
             });
           },
         ),
@@ -70,25 +60,65 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
           child: TabBarView(
             controller: tabCon,
             children: widget.tests
-                .map((e) => Center(
-                      child: AnimatedBuilder(
-                        animation: outputNoti,
-                        builder: (context, _) {
-                          return Text(
-                            output.join('\n'),
-                            style: TextStyle(
-                              fontFeatures: [
-                                FontFeature.tabularFigures(),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
+                .map((e) => TestScreen(
+                      test: e,
                     ))
                 .toList(),
           ),
         ),
       ],
+    );
+  }
+}
+
+class TestScreen extends StatefulWidget {
+  final ITextTest test;
+
+  const TestScreen({
+    super.key,
+    required this.test,
+  });
+
+  @override
+  State<TestScreen> createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen>
+    with SingleTickerProviderStateMixin {
+  Ticker? ticker;
+  List<String> output = [];
+  ValueNotifier<int> outputNoti = ValueNotifier(0);
+
+  @override
+  void initState() {
+    super.initState();
+    ticker = createTicker(_onTick);
+    ticker?.start();
+  }
+
+  @override
+  void dispose() {
+    outputNoti.dispose();
+    ticker?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: AnimatedBuilder(
+        animation: outputNoti,
+        builder: (context, _) {
+          return Text(
+            output.join('\n'),
+            style: TextStyle(
+              fontFeatures: [
+                FontFeature.tabularFigures(),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -97,7 +127,7 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
     final delta = lastElapsed == null ? Duration.zero : elapsed - lastElapsed!;
     lastElapsed = elapsed;
 
-    output = curTest.getOutput(elapsed, delta);
+    output = widget.test.getOutput(elapsed, delta);
     outputNoti.value += 1;
   }
 }
