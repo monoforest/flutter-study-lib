@@ -1,5 +1,6 @@
 library study_lib;
 
+export 'src/ext.state.dart' show FoomumuStateExtension;
 export 'src/ext.widget.dart' show WidgetExtension;
 export 'src/ext.num.dart' show NumDurationEx;
 export 'src/util.future.dart'
