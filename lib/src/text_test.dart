@@ -24,6 +24,7 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
   int tabIndex = 0;
 
   ITextTest get curTest => widget.tests[tabIndex];
+  GlobalKey testKey = GlobalKey();
 
   @override
   void initState() {
@@ -51,6 +52,7 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
           onTap: (newIndex) {
             safeSetState(() {
               tabIndex = newIndex;
+              testKey = GlobalKey();
             });
           },
         ),
@@ -60,20 +62,26 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
   }
 
   Widget buildBody() {
-    return Column(
-      children: [
-        Expanded(
-          child: TabBarView(
-            controller: tabCon,
-            children: widget.tests
-                .map((e) => TestScreen(
-                      test: e,
-                    ))
-                .toList(),
-          ),
-        ),
-      ],
+    return Center(
+      child: TestScreen(
+        key: testKey,
+        test: curTest,
+      ),
     );
+    // return Column(
+    //   children: [
+    //     Expanded(
+    //       child: TabBarView(
+    //         controller: tabCon,
+    //         children: widget.tests
+    //             .map((e) => TestScreen(
+    //                   test: e,
+    //                 ))
+    //             .toList(),
+    //       ),
+    //     ),
+    //   ],
+    // );
   }
 }
 
