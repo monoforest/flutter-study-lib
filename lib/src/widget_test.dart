@@ -102,6 +102,7 @@ class _WidgetTestScreenState extends State<WidgetTestScreen>
     super.initState();
 
     ticker = createTicker(_onTick);
+    ticker?.start();
   }
 
   @override
@@ -128,5 +129,6 @@ class _WidgetTestScreenState extends State<WidgetTestScreen>
 
     final tickerState = widgetKey.currentState as ITickerState?;
     tickerState?.onTick(elapsed, delta);
+    changeNoti.value += 1;
   }
 }
