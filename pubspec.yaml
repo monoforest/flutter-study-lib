@@ -1,0 +1,27 @@
+name: lib
+description: A new Flutter module project.
+version: 1.0.0+1
+homepage: null
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  auto_size_text: any
+  cached_network_image: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+
+flutter:
+  uses-material-design: true
+
+  module:
+    androidX: true
