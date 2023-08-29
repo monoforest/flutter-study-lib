@@ -49,6 +49,7 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
     return Column(
       children: [
         TabBar(
+          controller: tabCon,
           tabs: widget.tests.map((e) => Tab(text: e.authorName)).toList(),
           onTap: (newIndex) {
             safeSetState(() {
