@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:lib/src/console_test.dart';
+import 'package:lib/src/itext_test.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 class TextTest extends StatefulWidget {
