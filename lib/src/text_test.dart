@@ -20,6 +20,17 @@ void runTextTest(ITextTest test,
   );
 }
 
+Widget buildTextTest(ITextTest test,
+    {FlexScheme scheme = FlexScheme.blueM3, String title = 'Text Test'}) {
+  return TestApp(
+    scheme: scheme,
+    testBuilder: (context) => TextTest(
+      title: title,
+      tests: [test],
+    ),
+  );
+}
+
 class TextTest extends StatefulWidget {
   final String title;
   final List<ITextTest> tests;

@@ -5,6 +5,8 @@ export 'src/ext.widget.dart' show WidgetExtension;
 export 'src/ext.num.dart' show NumDurationEx;
 export 'src/util.future.dart'
     show waitUntil, waitUntilAsync, delayZero, delayMsec, delay;
-export 'src/text_test.dart' show TextTest, runTextTest;
+export 'src/text_test.dart' show TextTest, runTextTest, buildTextTest;
 export 'src/itext_test.dart' show ITextTest, StringEx;
-export 'src/widget_test.dart' show WidgetTest, IWidgetTest, ITickerState;
+export 'src/widget_test.dart'
+    show WidgetTest, IWidgetTest, ITickerState, buildWidgetTest;
+export 'src/test_app.dart' show TestApp;

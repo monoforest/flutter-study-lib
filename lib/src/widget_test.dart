@@ -17,6 +17,17 @@ void runWidgetTest(IWidgetTest test,
   );
 }
 
+Widget buildWidgetTest(IWidgetTest test,
+    {FlexScheme scheme = FlexScheme.blueM3, String title = 'Text Test'}) {
+  return TestApp(
+    scheme: scheme,
+    testBuilder: (context) => WidgetTest(
+      title: title,
+      tests: [test],
+    ),
+  );
+}
+
 class WidgetTest extends StatefulWidget {
   final String title;
   final List<IWidgetTest> tests;
