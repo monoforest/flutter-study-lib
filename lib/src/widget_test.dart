@@ -1,0 +1,127 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:lib/src/ext.state.dart';
+
+class WidgetTest extends StatefulWidget {
+  final String title;
+  final List<IWidgetTest> tests;
+
+  const WidgetTest({
+    super.key,
+    required this.tests,
+    required this.title,
+  });
+
+  @override
+  State<WidgetTest> createState() => _WidgetTestState();
+}
+
+class _WidgetTestState extends State<WidgetTest>
+    with SingleTickerProviderStateMixin {
+  late TabController tabCon;
+  int tabIndex = 0;
+
+  GlobalKey testKey = GlobalKey();
+  IWidgetTest get curTest => widget.tests[tabIndex];
+
+  @override
+  void initState() {
+    super.initState();
+
+    tabCon = TabController(
+      length: widget.tests.length,
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        bottom: TabBar(
+          controller: tabCon,
+          tabs: widget.tests.map((e) => Tab(text: e.authorName)).toList(),
+          onTap: (newIndex) {
+            safeSetState(() {
+              tabIndex = newIndex;
+              testKey = GlobalKey();
+            });
+          },
+        ),
+      ),
+      body: buildBody(),
+    );
+  }
+
+  Widget buildBody() {
+    return Center(
+      child: WidgetTestScreen(
+        key: testKey,
+        test: curTest,
+      ),
+    );
+  }
+}
+
+abstract class IWidgetTest {
+  String get authorName;
+  TickerProvider get tickerProvider;
+  void onTick(Duration elapsed, Duration delta);
+  Widget build(BuildContext context);
+}
+
+class WidgetTestScreen extends StatefulWidget {
+  final IWidgetTest test;
+
+  const WidgetTestScreen({
+    super.key,
+    required this.test,
+  });
+
+  @override
+  State<WidgetTestScreen> createState() => _WidgetTestScreenState();
+}
+
+class _WidgetTestScreenState extends State<WidgetTestScreen>
+    with SingleTickerProviderStateMixin {
+  Ticker? ticker;
+  ValueNotifier<int> changeNoti = ValueNotifier(0);
+
+  @override
+  void initState() {
+    super.initState();
+
+    ticker = createTicker(_onTick);
+  }
+
+  @override
+  void dispose() {
+    ticker?.dispose();
+    changeNoti.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: changeNoti,
+      builder: (context, _) {
+        return widget.test.build(context);
+      },
+    );
+  }
+
+  Duration? lastElapsed;
+  void _onTick(Duration elapsed) {
+    final delta = lastElapsed == null ? Duration.zero : elapsed - lastElapsed!;
+    lastElapsed = elapsed;
+    widget.test.onTick(elapsed, delta);
+  }
+}
