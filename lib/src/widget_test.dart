@@ -72,9 +72,11 @@ class _WidgetTestState extends State<WidgetTest>
 
 abstract class IWidgetTest {
   String get authorName;
-  TickerProvider get tickerProvider;
+  StatefulWidget createWidget(BuildContext context, Key key);
+}
+
+abstract class ITickerState<T extends State> {
   void onTick(Duration elapsed, Duration delta);
-  Widget build(BuildContext context);
 }
 
 class WidgetTestScreen extends StatefulWidget {
@@ -93,6 +95,7 @@ class _WidgetTestScreenState extends State<WidgetTestScreen>
     with SingleTickerProviderStateMixin {
   Ticker? ticker;
   ValueNotifier<int> changeNoti = ValueNotifier(0);
+  GlobalKey widgetKey = GlobalKey();
 
   @override
   void initState() {
@@ -113,7 +116,7 @@ class _WidgetTestScreenState extends State<WidgetTestScreen>
     return AnimatedBuilder(
       animation: changeNoti,
       builder: (context, _) {
-        return widget.test.build(context);
+        return widget.test.createWidget(context, widgetKey);
       },
     );
   }
@@ -122,6 +125,8 @@ class _WidgetTestScreenState extends State<WidgetTestScreen>
   void _onTick(Duration elapsed) {
     final delta = lastElapsed == null ? Duration.zero : elapsed - lastElapsed!;
     lastElapsed = elapsed;
-    widget.test.onTick(elapsed, delta);
+
+    final tickerState = widgetKey.currentState as ITickerState?;
+    tickerState?.onTick(elapsed, delta);
   }
 }
