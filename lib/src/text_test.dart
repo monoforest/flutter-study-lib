@@ -6,11 +6,13 @@ import 'package:lib/src/ext.state.dart';
 import 'package:lib/src/itext_test.dart';
 
 class TextTest extends StatefulWidget {
+  final String title;
   final List<ITextTest> tests;
 
   const TextTest({
     super.key,
     required this.tests,
+    required this.title,
   });
 
   @override
@@ -41,14 +43,9 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildBody(),
-    );
-  }
-
-  Widget buildBody() {
-    return Column(
-      children: [
-        TabBar(
+      appBar: AppBar(
+        title: Text(widget.title),
+        bottom: TabBar(
           controller: tabCon,
           tabs: widget.tests.map((e) => Tab(text: e.authorName)).toList(),
           onTap: (newIndex) {
@@ -57,6 +54,14 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
             });
           },
         ),
+      ),
+      body: buildBody(),
+    );
+  }
+
+  Widget buildBody() {
+    return Column(
+      children: [
         Expanded(
           child: TabBarView(
             controller: tabCon,
