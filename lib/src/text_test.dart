@@ -197,7 +197,12 @@ class _TestScreenState extends State<TestScreen>
     final delta = lastElapsed == null ? Duration.zero : elapsed - lastElapsed!;
     lastElapsed = elapsed;
 
-    output = widget.test.getOutput(elapsed, delta);
+    try {
+      output = widget.test.getOutput(elapsed, delta);
+    } catch (e, s) {
+      'FAIED $e, $s'.ilog();
+      output = ['FAILED $e', '$s'];
+    }
     outputNoti.value += 1;
   }
 }
