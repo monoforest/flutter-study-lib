@@ -8,5 +8,5 @@ export 'src/util.future.dart'
 export 'src/text_test.dart' show TextTest, runTextTest, buildTextTest;
 export 'src/itext_test.dart' show ITextTest, StringEx;
 export 'src/widget_test.dart'
-    show WidgetTest, IWidgetTest, ITickerState, buildWidgetTest;
+    show WidgetTest, IWidgetTest, ITickerState, buildWidgetTest, runWidgetTest;
 export 'src/test_app.dart' show TestApp;
