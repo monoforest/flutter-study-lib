@@ -160,9 +160,9 @@ class _TestScreenState extends State<TestScreen>
           children: [
             if (outputDuration != null)
               Text(
-                'output time: ${outputMicroSec.toStringAsFixed(2)} usec,'
-                'frame time: ${outputDuration!.inMilliseconds} msec, '
-                '${outputFps.toStringAsFixed(2)} fps',
+                'output time: ${outputMicroSec.format('000.000')} usec,'
+                'frame time: ${outputDuration!.inMilliseconds.format('00.00')} msec, '
+                '${outputFps.format('000.00')} fps',
                 style: kRubikMediumMono.copyWith(
                   fontSize: 12,
                   color: Theme.of(context).colorScheme.primary,
