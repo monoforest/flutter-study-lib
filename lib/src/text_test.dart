@@ -150,6 +150,8 @@ class _TestScreenState extends State<TestScreen>
     return AnimatedBuilder(
       animation: outputNoti,
       builder: (context, _) {
+        // get output micro seconds
+        final outputMicroSec = outputDuration?.inMicroseconds ?? 0.0;
         final outputMsec = outputDuration?.inMilliseconds ?? 0.0;
         final outputFps = outputMsec <= 0.0 ? 0.0 : 1000.0 / outputMsec;
 
@@ -158,6 +160,7 @@ class _TestScreenState extends State<TestScreen>
           children: [
             if (outputDuration != null)
               Text(
+                'output time: ${outputMicroSec.toStringAsFixed(2)} usec,'
                 'frame time: ${outputDuration!.inMilliseconds} msec, '
                 '${outputFps.toStringAsFixed(2)} fps',
                 style: kRubikMediumMono.copyWith(
