@@ -6,6 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:lib/src/ext.state.dart';
 import 'package:lib/src/itext_test.dart';
 import 'package:lib/src/test_app.dart';
+import 'package:lib/study_lib.dart';
 
 void runTextTest(ITextTest test,
     {FlexScheme scheme = FlexScheme.blueM3, String title = 'Text Test'}) {
@@ -149,9 +150,25 @@ class _TestScreenState extends State<TestScreen>
     return AnimatedBuilder(
       animation: outputNoti,
       builder: (context, _) {
+        final outputMsec = outputDuration?.inMilliseconds ?? 0.0;
+        final outputFps = outputMsec == 0.0 ? 0.0 : 1000.0 / outputMsec;
+
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (outputDuration != null)
+              Text(
+                'frame time: ${outputDuration!.inMilliseconds} msec, '
+                '${outputFps.toStringAsFixed(2)} fps',
+                style: kRubikMediumMono.copyWith(
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -170,7 +187,7 @@ class _TestScreenState extends State<TestScreen>
                     widget.test.setInput(inputCon.text.split(' '));
                     inputCon.clear();
                   },
-                  child: Text('입력'),
+                  child: Text('전달'),
                 ),
               ],
             ),
@@ -192,17 +209,24 @@ class _TestScreenState extends State<TestScreen>
     );
   }
 
+  Duration? outputDuration;
   Duration? lastElapsed;
   void _onTick(Duration elapsed) {
     final delta = lastElapsed == null ? Duration.zero : elapsed - lastElapsed!;
     lastElapsed = elapsed;
 
+    final watch = Stopwatch();
     try {
+      watch.start();
       output = widget.test.getOutput(elapsed, delta);
     } catch (e, s) {
       'FAIED $e, $s'.ilog();
       output = ['FAILED $e', '$s'];
+    } finally {
+      watch.stop();
+      outputDuration = watch.elapsed;
     }
+
     outputNoti.value += 1;
   }
 }
