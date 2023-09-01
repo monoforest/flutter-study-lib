@@ -151,7 +151,7 @@ class _TestScreenState extends State<TestScreen>
       animation: outputNoti,
       builder: (context, _) {
         final outputMsec = outputDuration?.inMilliseconds ?? 0.0;
-        final outputFps = outputMsec == 0.0 ? 0.0 : 1000.0 / outputMsec;
+        final outputFps = outputMsec <= 0.0 ? 0.0 : 1000.0 / outputMsec;
 
         return Column(
           mainAxisSize: MainAxisSize.min,
