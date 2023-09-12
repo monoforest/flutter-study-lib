@@ -9,8 +9,14 @@ abstract class ITextTest {
   void setInput(List<String> args);
 }
 
+enum KeyEventAct {
+  down,
+  up,
+  repeat,
+}
+
 abstract class IKeyListenable {
-  void onKey(KeyEvent event);
+  void onKey(KeyEvent event, KeyEventAct act);
 }
 
 extension StringEx on String? {

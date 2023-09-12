@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:lib/src/ext.state.dart';
 import 'package:lib/src/itext_test.dart';
 import 'package:lib/src/test_app.dart';
@@ -79,7 +80,16 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
         onKeyEvent: (e) {
           final t = curTest;
           if (t is IKeyListenable) {
-            (t as IKeyListenable).onKey(e);
+            late KeyEventAct act;
+            if (e is KeyDownEvent) {
+              act = KeyEventAct.down;
+            } else if (e is KeyUpEvent) {
+              act = KeyEventAct.up;
+            } else if (e is KeyRepeatEvent) {
+              act = KeyEventAct.repeat;
+            }
+
+            (t as IKeyListenable).onKey(e, act);
           }
         },
         child: Scaffold(
