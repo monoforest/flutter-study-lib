@@ -52,6 +52,7 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
 
   ITextTest get curTest => widget.tests[tabIndex];
   GlobalKey testKey = GlobalKey();
+  FocusNode focusKeyboard = FocusNode();
 
   @override
   void initState() {
@@ -70,21 +71,34 @@ class _TextTestState extends State<TextTest> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        bottom: TabBar(
-          controller: tabCon,
-          tabs: widget.tests.map((e) => Tab(text: e.authorName)).toList(),
-          onTap: (newIndex) {
-            safeSetState(() {
-              tabIndex = newIndex;
-              testKey = GlobalKey();
-            });
-          },
+    return GestureDetector(
+      onTap: () => focusKeyboard.requestFocus(),
+      child: KeyboardListener(
+        autofocus: true,
+        focusNode: focusKeyboard,
+        onKeyEvent: (e) {
+          final t = curTest;
+          if (t is IKeyListenable) {
+            (t as IKeyListenable).onKey(e);
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+            bottom: TabBar(
+              controller: tabCon,
+              tabs: widget.tests.map((e) => Tab(text: e.authorName)).toList(),
+              onTap: (newIndex) {
+                safeSetState(() {
+                  tabIndex = newIndex;
+                  testKey = GlobalKey();
+                });
+              },
+            ),
+          ),
+          body: buildBody(),
         ),
       ),
-      body: buildBody(),
     );
   }
 

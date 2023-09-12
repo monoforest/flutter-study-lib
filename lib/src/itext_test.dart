@@ -9,6 +9,10 @@ abstract class ITextTest {
   void setInput(List<String> args);
 }
 
+abstract class IKeyListenable {
+  void onKey(KeyEvent event);
+}
+
 extension StringEx on String? {
   void ilog() {
     // dev.log('\x1B[36m[${Trace.current().frames[1].member}] $this\x1B[0m');
