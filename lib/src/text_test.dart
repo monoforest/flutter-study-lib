@@ -163,7 +163,7 @@ class _TestScreenState extends State<TestScreen>
                 'output time: ${outputMicroSec.format('000.000')} usec,'
                 'frame time: ${outputDuration!.inMilliseconds.format('00.00')} msec, '
                 '${outputFps.format('000.00')} fps',
-                style: kRubikMediumMono.copyWith(
+                style: kNanumMediumMono.copyWith(
                   fontSize: 12,
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -198,10 +198,8 @@ class _TestScreenState extends State<TestScreen>
               child: Center(
                 child: Text(
                   output.join('\n'),
-                  style: TextStyle(
-                    fontFeatures: [
-                      FontFeature.tabularFigures(),
-                    ],
+                  style: kNanumMediumMono.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),

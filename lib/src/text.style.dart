@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:google_fonts/google_fonts.dart';
 
-final kRubikMedium = GoogleFonts.rubik(
+final kNanumMedium = GoogleFonts.nanumGothicCoding(
   fontSize: 14,
   fontWeight: FontWeight.normal,
 );
 
-final kRubikMediumMono = GoogleFonts.rubik(
+final kNanumMediumMono = GoogleFonts.nanumGothicCoding(
   fontSize: 14,
   fontWeight: FontWeight.normal,
   fontFeatures: [
